@@ -16,13 +16,16 @@ import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-import {useTheme} from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
-import {AuthContext} from '../components/context';
+import { AuthContext } from '../components/context';
 
 import Users from '../model/users';
 
-const SignInScreen = ({navigation}) => {
+import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-community/async-storage';
+
+const SignInScreen = ({ navigation }) => {
   const [data, setData] = React.useState({
     username: '',
     password: '',
@@ -32,9 +35,9 @@ const SignInScreen = ({navigation}) => {
     isValidPassword: true,
   });
 
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
-  const {signIn} = React.useContext(AuthContext);
+  const { signIn } = React.useContext(AuthContext);
 
   const textInputChange = val => {
     if (val.trim().length >= 4) {
@@ -100,19 +103,45 @@ const SignInScreen = ({navigation}) => {
       Alert.alert(
         'Wrong Input!',
         'Username or password field cannot be empty.',
-        [{text: 'Okay'}],
+        [{ text: 'Okay' }],
       );
       return;
     }
 
     if (foundUser.length == 0) {
       Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-        {text: 'Okay'},
+        { text: 'Okay' },
       ]);
       return;
     }
     signIn(foundUser);
   };
+
+  const onSignIn = () => {
+    if (data.isValidPassword && data.isValidUser) {
+      auth().signInWithEmailAndPassword(data.username, data.password)
+        .then(async (response) => {
+          if (response.user) {
+            await AsyncStorage.setItem('user', JSON.stringify(response));
+            navigation.navigate('HomeDrawer')
+          }
+          console.log('User account signed in!');
+        }).catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            alert('That email address is already in use!')
+            console.log('That email address is already in use!');
+          }
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+          console.error(error);
+        });
+    }
+  }
+
+  const onForgotPassword = () => {
+    navigation.navigate('ForgotPasswordScreen')
+  }
 
   return (
     <View style={styles.container}>
@@ -207,15 +236,13 @@ const SignInScreen = ({navigation}) => {
           </Animatable.View>
         )}
 
-        <TouchableOpacity>
-          <Text style={{color: '#009387', marginTop: 1}}>Forgot password?</Text>
+        <TouchableOpacity onPress={onForgotPassword}>
+          <Text style={{ color: '#009387', marginTop: 1 }}>Forgot password?</Text>
         </TouchableOpacity>
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.signIn}
-            onPress={() => {
-              loginHandle(data.username, data.password);
-            }}>
+            onPress={onSignIn}>
             <LinearGradient
               colors={['#08d4c4', '#01ab9d']}
               style={styles.signIn}>

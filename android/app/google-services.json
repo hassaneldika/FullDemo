@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "432267647981",
+    "project_id": "fulldemorn",
+    "storage_bucket": "fulldemorn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432267647981:android:1d4f117d1151ce949625e4",
+        "android_client_info": {
+          "package_name": "com.fullstack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432267647981-vssuog7esdecs2j3vg6naia85r1pihb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5UIVbUoe6YWFXsOY0Q3grKIAzLmBlui4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432267647981-vssuog7esdecs2j3vg6naia85r1pihb2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
