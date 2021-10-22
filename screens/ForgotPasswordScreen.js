@@ -16,6 +16,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 
+
 const ForgotPasswordScreen = ({ navigation }) => {
     const [data, setData] = React.useState({
         email: '',
