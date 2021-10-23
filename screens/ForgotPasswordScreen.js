@@ -20,37 +20,42 @@ import auth from '@react-native-firebase/auth';
 const ForgotPasswordScreen = ({ navigation }) => {
     const [data, setData] = React.useState({
         email: '',
-        isValidEmail: false,
+        isValidEmail: true,
     });
     const { colors } = useTheme();
 
     const handleValidEmail = val => {
-        if (val.trim().length >= 4) {
-            setData({
+        console.log(val)
+        if (val?.length >= 4) {
+            var tmpData = {
                 ...data,
                 isValidEmail: true,
-            });
+            };
+            setData(tmpData)
         } else {
-            setData({
+            var tmpData = {
                 ...data,
                 isValidEmail: false,
-            });
+            };
+            setData(tmpData)
         }
     };
 
     const textInputChange = val => {
-        if (val.trim().length >= 4) {
-            setData({
+        if (val?.length >= 4) {
+            var tmpData = {
                 ...data,
                 email: val,
                 isValidEmail: true,
-            });
+            };
+            setData(tmpData)
         } else {
-            setData({
+            var tmpData = {
                 ...data,
                 email: val,
                 isValidEmail: false,
-            });
+            };
+            setData(tmpData)
         }
     };
 
@@ -92,6 +97,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
                 <View style={styles.action}>
                     <FontAwesome name="user-o" color={colors.text} size={20} />
                     <TextInput
+                        value={data.email}
                         placeholder="Your Email"
                         placeholderTextColor="#666666"
                         style={[
@@ -101,8 +107,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
                             },
                         ]}
                         autoCapitalize="none"
-                        onChangeText={val => textInputChange(val)}
-                        onEndEditing={e => handleValidEmail(e.nativeEvent.text)}
+                        onChangeText={textInputChange}
+                    // onEndEditing={e => handleValidEmail(e.nativeEvent.text)}
                     />
                     {data.check_textInputChange ? (
                         <Animatable.View animation="bounceIn">

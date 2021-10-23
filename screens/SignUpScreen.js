@@ -32,47 +32,53 @@ const SignInScreen = ({ navigation }) => {
   });
 
   const textInputChange = val => {
-    if (val.length !== 0) {
-      setData({
+    if (val?.length !== 0) {
+      var tmpData = {
         ...data,
         username: val,
         check_textInputChange: true,
-      });
+      };
+      setData(tmpData)
     } else {
-      setData({
+      var tmpData = {
         ...data,
         username: val,
         check_textInputChange: false,
-      });
+      };
+      setData(tmpData)
     }
   };
 
   const handlePasswordChange = val => {
-    setData({
+    var tmpData = {
       ...data,
       password: val,
-    });
+    };
+    setData(tmpData)
   };
 
   const handleConfirmPasswordChange = val => {
-    setData({
+    var tmpData = {
       ...data,
       confirm_password: val,
-    });
+    };
+    setData(tmpData)
   };
 
   const updateSecureTextEntry = () => {
-    setData({
+    var tmpData = {
       ...data,
       secureTextEntry: !data.secureTextEntry,
-    });
+    };
+    setData(tmpData)
   };
 
   const updateConfirmSecureTextEntry = () => {
-    setData({
+    var tmpData = {
       ...data,
       confirm_secureTextEntry: !data.confirm_secureTextEntry,
-    });
+    };
+    setData(tmpData)
   };
 
   const onSignUp = () => {
@@ -109,10 +115,11 @@ const SignInScreen = ({ navigation }) => {
           <View style={styles.action}>
             <FontAwesome name="user-o" color="#05375a" size={20} />
             <TextInput
+              value={data.username}
               placeholder="Your Username"
               style={styles.textInput}
               autoCapitalize="none"
-              onChangeText={val => textInputChange(val)}
+              onChangeText={textInputChange}
             />
             {data.check_textInputChange ? (
               <Animatable.View animation="bounceIn">
@@ -133,11 +140,12 @@ const SignInScreen = ({ navigation }) => {
           <View style={styles.action}>
             <Feather name="lock" color="#05375a" size={20} />
             <TextInput
+              value={data.password}
               placeholder="Your Password"
               secureTextEntry={data.secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
-              onChangeText={val => handlePasswordChange(val)}
+              onChangeText={handlePasswordChange}
             />
             <TouchableOpacity onPress={updateSecureTextEntry}>
               {data.secureTextEntry ? (
@@ -160,11 +168,12 @@ const SignInScreen = ({ navigation }) => {
           <View style={styles.action}>
             <Feather name="lock" color="#05375a" size={20} />
             <TextInput
+              value={data.confirm_password}
               placeholder="Confirm Your Password"
               secureTextEntry={data.confirm_secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
-              onChangeText={val => handleConfirmPasswordChange(val)}
+              onChangeText={handleConfirmPasswordChange}
             />
             <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
               {data.secureTextEntry ? (

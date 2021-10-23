@@ -40,57 +40,65 @@ const SignInScreen = ({ navigation }) => {
   const { signIn } = React.useContext(AuthContext);
 
   const textInputChange = val => {
-    if (val.trim().length >= 4) {
-      setData({
+    if (val?.length >= 4) {
+      var tmpData = {
         ...data,
         username: val,
         check_textInputChange: true,
         isValidUser: true,
-      });
+      }
+      setData(tmpData)
     } else {
-      setData({
+      var tmpData = {
         ...data,
         username: val,
         check_textInputChange: false,
         isValidUser: false,
-      });
+      };
+      setData(tmpData)
     }
   };
 
   const handlePasswordChange = val => {
-    if (val.trim().length >= 8) {
-      setData({
+    if (val?.length >= 8) {
+      var tmpData = {
         ...data,
         password: val,
         isValidPassword: true,
-      });
+      };
+      setData(tmpData)
     } else {
-      setData({
+      var tmpData = {
         ...data,
         password: val,
         isValidPassword: false,
-      });
+      };
+      setData(tmpData)
     }
   };
 
   const updateSecureTextEntry = () => {
-    setData({
+    var tmpData = {
       ...data,
       secureTextEntry: !data.secureTextEntry,
-    });
+    };
+    setData(tmpData)
   };
 
   const handleValidUser = val => {
-    if (val.trim().length >= 4) {
-      setData({
+    console.log(val)
+    if (val?.length >= 4) {
+      var tmpData = {
         ...data,
         isValidUser: true,
-      });
+      };
+      setData(tmpData)
     } else {
-      setData({
+      var tmpData = {
         ...data,
         isValidUser: false,
-      });
+      };
+      setData(tmpData)
     }
   };
 
@@ -169,6 +177,7 @@ const SignInScreen = ({ navigation }) => {
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={20} />
           <TextInput
+            value={data.username}
             placeholder="Your Username"
             placeholderTextColor="#666666"
             style={[
@@ -178,8 +187,8 @@ const SignInScreen = ({ navigation }) => {
               },
             ]}
             autoCapitalize="none"
-            onChangeText={val => textInputChange(val)}
-            onEndEditing={e => handleValidUser(e.nativeEvent.text)}
+            onChangeText={textInputChange}
+            // onEndEditing={e => handleValidUser(e.nativeEvent.text)}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
@@ -208,6 +217,7 @@ const SignInScreen = ({ navigation }) => {
         <View style={styles.action}>
           <Feather name="lock" color={colors.text} size={20} />
           <TextInput
+            value={data.password}
             placeholder="Your Password"
             placeholderTextColor="#666666"
             secureTextEntry={data.secureTextEntry ? true : false}
@@ -218,7 +228,7 @@ const SignInScreen = ({ navigation }) => {
               },
             ]}
             autoCapitalize="none"
-            onChangeText={val => handlePasswordChange(val)}
+            onChangeText={handlePasswordChange}
           />
           <TouchableOpacity onPress={updateSecureTextEntry}>
             {data.secureTextEntry ? (

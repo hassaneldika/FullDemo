@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 
 const DetailsScreen = ({ navigation }) => {
@@ -49,7 +49,10 @@ const DetailsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Button title="Send Notification" onPress={onSendNotification} />
+      <TouchableOpacity
+        style={styles.circleButton}
+        onPress={onSendNotification}
+      />
     </View>
   );
 };
@@ -61,5 +64,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  circleButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: 'red',
+    marginLeft: 70,
+    marginTop: 120,
   },
 });
